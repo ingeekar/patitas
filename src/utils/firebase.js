@@ -1,5 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/storage';
+import 'firebase/database';
 
 // Patitas web app's Firebase configuration
 const firebaseConfig = {
@@ -14,5 +16,7 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-export const { auth } = firebase
+export const { auth } = firebase;
+export const storage = firebase.storage();
+export const database = firebase.database();
 export const provider = new firebase.auth.FacebookAuthProvider();

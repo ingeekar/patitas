@@ -5,10 +5,9 @@ const NotFound = () => {
         <div className="NotFound">
             <div className="NotFound-container">
                 <div className="NotFound-content">
-                    <h3>Algo salio mal...</h3>
-                    <div style="width:100%;height:0;padding-bottom:101%;position:relative;">
-                        <iframe src="https://giphy.com/embed/51Uiuy5QBZNkoF3b2Z" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen>
-                        </iframe>
+                    <h3>Upss... Algo salio mal...</h3>
+                    <div className="NotFoundImg">
+                        <img src="https://media.giphy.com/media/51Uiuy5QBZNkoF3b2Z/giphy.gif" alt="" />
                     </div>
                     <p><a href="https://giphy.com/gifs/mrw-boy-51Uiuy5QBZNkoF3b2Z">via GIPHY</a></p>
                 </div>

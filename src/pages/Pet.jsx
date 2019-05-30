@@ -1,12 +1,14 @@
 import React from 'react';
+import PetInfo from '../components/PetInfo';
 
 
-const Pet = () => {
+const Pet = (props) => {
+    const pet = props.location.state;
     return (
         <div className="Pet">
             <div className="Pet-container">
                 <div className="Pet-items">
-                    <h3>Mascotas</h3>
+                    <PetInfo pet={pet} />
                 </div>
             </div>
         </div>
