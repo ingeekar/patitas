@@ -20,7 +20,7 @@ const PetInfo = props => {
                             <i className={gender === 'male' ? 'fas fa-mars' : "far fa-venus"}></i>
                         </p>
                         <div className="PetInfo-type">
-                            <button>Adoptar</button>
+                            <button>Adoptar o Cuidad</button>
                         </div>
                         <div className="PetInfo-profile-adopt">
                             <div className="PetInfo-item">
