@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Layout from '../components/Layout';
 import '../styles/global.css';
@@ -7,11 +7,21 @@ import Home from './../pages/Home';
 import Login from './../pages/Login';
 import Dashboard from '../pages/Dashboard';
 import Pet from './../pages/Pet';
+import { auth } from '../utils/firebase';
+import { setUser, setLogin } from './../actions/index';
+import { connect } from 'react-redux';
 
+const App = props => {
 
+  useEffect(() => {
+    auth().onAuthStateChanged((user) => {
+      if (user) {
+        props.setUser(user)
+        props.setLogin(true)
+      }
+    })
+  }, [])
 
-
-const App = () => {
   return (
     <div>
       <BrowserRouter>
@@ -30,4 +40,9 @@ const App = () => {
   )
 }
 
-export default App;
+const mapDispatchToProps = {
+  setUser,
+  setLogin,
+}
+
+export default connect(null, mapDispatchToProps)(App);

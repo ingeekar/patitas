@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { storage, database } from '../utils/firebase'
-import moment from 'moment'
+import moment from 'moment';
+import { connect } from 'react-redux';
 
-const Form = () => {
+const Form = props => {
 
 
     const [petPhoto, setPetPhoto] = useState('')
     const [sendForm, setSendForm] = useState(false)
+    const [loadedPhoto, setLoadedPhoto] = useState(false)
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -23,10 +25,12 @@ const Form = () => {
             'gender': form.get('gender'),
             'name': form.get('name'),
             'photo': petPhoto,
-            'profilePic': '',
+            'profilePic': props.user.photoURL,
             'type': form.get('type'),
-            'userContact': '',
-            'userName': ''
+            'userContact': props.user.email,
+            'userName': props.user.displayName,
+            'phone': form.get('phone'),
+            'whatsapp': form.get('whatsapp')
         }
 
         database.ref('pets').push(data)
@@ -42,7 +46,10 @@ const Form = () => {
         uploadFile
             .then((snapshot) => {
                 snapshot.ref.getDownloadURL()
-                    .then(downloadURL => setPetPhoto(downloadURL));
+                    .then(downloadURL => {
+                        setPetPhoto(downloadURL)
+                        setLoadedPhoto(true)
+                    });
             })
     }
 
@@ -79,9 +86,11 @@ const Form = () => {
                             <option value="true">Dar en adopción</option>
                             <option value="false">Cuidar</option>
                         </select>
+                        <input type="number" name="phone" placeholder="Numero de contacto" />
+                        <label >Quieres que te contacten por WhatsApp?</label>
+                        <input type="checkbox" name='whatsapp' value='true' /> Si
                         <input type="file" onChange={onChangeFile} name="photo" />
-                        <button>Enviar</button>
-
+                        <button type="submit">{loadedPhoto ? 'Enviar' : 'Cargando'}</button>
                     </form>
                 </div>
             }
@@ -89,4 +98,10 @@ const Form = () => {
     )
 }
 
-export default Form;
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps)(Form);

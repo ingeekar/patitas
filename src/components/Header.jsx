@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Nav from './Nav';
+import Modal from './Modal';
+import { connect } from 'react-redux';
+import Form from './Form';
+import Login from './../pages/Login';
 
-const Header = () => {
+const Header = props => {
+
+    const [modal, setModal] = useState(false)
+    const showModal = () => {
+        setModal(!modal)
+    }
     return (
         <div className="Header">
             <div className="Header-container">
@@ -14,12 +23,26 @@ const Header = () => {
                         </Link>
                     </div>
                     <div className="Header-nav">
-                        <Nav />
+                        <Nav showModal={showModal} />
                     </div>
                 </div>
             </div>
+
+            <Modal show={modal} close={showModal} >
+                {props.login ?
+                    <Form /> :
+                    <div className="Modal-login">
+                        <Login />
+                    </div>}
+            </Modal>
         </div>
     )
 }
 
-export default Header
+
+const mapStateToProps = state => {
+    return {
+        login: state.login
+    }
+}
+export default connect(mapStateToProps)(Header)
